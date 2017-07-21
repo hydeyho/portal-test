@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Finning.Web.Builders;
+using Finning.Web.Data;
 using Finning.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,19 +18,7 @@ namespace Finning.Web.Controllers.Api
 
         public CustomersController()
         {
-            Customers = new List<Customer>
-            {
-                new Customer
-                {
-                    Name = "Special Customer",
-                    AccountNumber = "ABC123",
-                    Address1 = "123 Special Road",
-                    Address2 = "London",
-                    PostCode = "W1 1AA",
-                    CreditLimit = 1000000,
-                    Email = "theboss@specialcompany.com"
-                }
-            };
+            Customers = CustomerData.Get();
         }
 
         [HttpGet]

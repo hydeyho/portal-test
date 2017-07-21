@@ -33,16 +33,9 @@
 
         var customerDetails = {
             name: 'customers.details',
-            url: '/details/{accountNumber}',
+            url: '/{accountNumber}',
             templateUrl: '/app/customers/details/view.html',
-            controller: 'customerDetailsController as customerDetailsCtrl',
-            resolve: {
-                'customerDetails': [
-                    '$stateParams', 'customersService', function($stateParams, customersService) {
-                        return customersService.get({ accountNumber: $stateParams.accountNumber }).$promise;
-                    }
-                ]
-            }
+            controller: 'customerDetailsController as customerDetailsCtrl'
         };
 
         $stateProvider.state(home);

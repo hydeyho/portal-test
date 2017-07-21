@@ -5,4 +5,5 @@
         'ngResource',
         'ui.router'
     ]);
+
 })(window.angular);

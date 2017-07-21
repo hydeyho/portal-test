@@ -5,15 +5,16 @@
         .module('app')
         .controller('customerDetailsController', controller);
 
-    controller.$inject = ['customerDetails'];
+    controller.$inject = ['$stateParams', 'customersService'];
 
-    function controller(customerDetails) {
+    function controller($stateParams, customersService) {
         /* jshint validthis:true */
         var vm = this;
-        vm.customerDetails = customerDetails;
 
-        activate();
+        activate($stateParams.accountNumber);
 
-        function activate() { }
+        function activate(accountNumber) {
+            vm.customerDetails = customersService.get({ accountNumber: accountNumber });
+        }
     }
 })(window.angular);
