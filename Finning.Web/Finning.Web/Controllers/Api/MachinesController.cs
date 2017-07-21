@@ -11,33 +11,33 @@ using Microsoft.AspNetCore.Mvc;
 namespace Finning.Web.Controllers.Api
 {
     [Produces("application/json")]
-    [Route("api/Customers")]
-    public class CustomersController : Controller
+    [Route("api/Machines")]
+    public class MachinesController : Controller
     {
-        public List<Customer> Customers { get; set; }
+        public List<Machine> Machines { get; set; }
 
-        public CustomersController()
+        public MachinesController()
         {
-            Customers = CustomersData.Get();
+            Machines = MachinesData.Get();
         }
 
         [HttpGet]
         [Route("")]
-        [ProducesResponseType(typeof(List<CustomerViewModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<MachineViewModel>), StatusCodes.Status200OK)]
         public IActionResult Get()
         {
-            var builder = new CustomerViewModelBuilder();
-            var result = builder.Build(Customers);
+            var builder = new MachineViewModelBuilder();
+            var result = builder.Build(Machines);
             return Ok(result);
         }
 
         [HttpGet]
-        [Route("{accountNumber}")]
+        [Route("{serialNumber}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(Customer), StatusCodes.Status200OK)]
-        public IActionResult Get(string accountNumber)
+        [ProducesResponseType(typeof(Machine), StatusCodes.Status200OK)]
+        public IActionResult Get(string serialNumber)
         {
-            var result = Customers.SingleOrDefault(customer => customer.AccountNumber == accountNumber);
+            var result = Machines.SingleOrDefault(customer => customer.SerialNumber == serialNumber);
             if (result == null)
             {
                 return NotFound();

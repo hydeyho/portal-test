@@ -6,7 +6,7 @@ using Finning.Web.Models;
 
 namespace Finning.Web.Data
 {
-    public static class CustomerData
+    public static class CustomersData
     {
         public static List<Customer> Get()
         {
