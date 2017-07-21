@@ -16,7 +16,15 @@
             controller: 'homeController as homeCtrl'
         }
 
+        var customers = {
+            name: 'customers',
+            url: '/customers',
+            templateUrl: '/app/customers/view.html',
+            controller: 'customersController as customerCtrl'
+        }
+
         $stateProvider.state(home);
+        $stateProvider.state(customers);
     }
     
 })(window.angular);
