@@ -13,5 +13,6 @@ namespace Finning.Web.Models
         public string Address2 { get; set; }
         public string PostCode { get; set; }
         public decimal CreditLimit { get; set; }
+        public string Email { get; set; }
     }
 }

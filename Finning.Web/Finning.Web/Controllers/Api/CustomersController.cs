@@ -26,7 +26,8 @@ namespace Finning.Web.Controllers.Api
                     Address1 = "123 Special Road",
                     Address2 = "London",
                     PostCode = "W1 1AA",
-                    CreditLimit = 1000000
+                    CreditLimit = 1000000,
+                    Email = "theboss@specialcompany.com"
                 }
             };
         }
