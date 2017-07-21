@@ -5,11 +5,12 @@
         .module('app')
         .controller('customersController', controller);
 
-    controller.$inject = [];
+    controller.$inject = ['customers'];
 
-    function controller() {
+    function controller(customers) {
         /* jshint validthis:true */
         var vm = this;
+        vm.customers = customers;
 
         activate();
 

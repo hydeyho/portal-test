@@ -1,1 +1,16 @@
-﻿
+﻿<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Account Number</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="customer in customerCtrl.customers track by customer.accountNumber">
+        <td>{{customer.name}}</td>
+        <td>{{customer.accountNumber}}</td>
+        <td><a ui-sref="customers.details({accountNumber: customer.accountNumber})"></a></td>
+    </tr>
+    </tbody>
+</table>

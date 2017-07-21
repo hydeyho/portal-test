@@ -33,7 +33,7 @@ namespace Finning.Web.Controllers.Api
 
         [HttpGet]
         [Route("")]
-        [ProducesResponseType(typeof(List<CustomerViewModel>), StatusCodes.Status200OK))]
+        [ProducesResponseType(typeof(List<CustomerViewModel>), StatusCodes.Status200OK)]
         public IActionResult Get()
         {
             var builder = new CustomerViewModelBuilder();

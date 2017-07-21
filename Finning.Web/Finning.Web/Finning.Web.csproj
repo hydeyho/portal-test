@@ -11,6 +11,7 @@
     <Content Include="wwwroot\app\customers\controller.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="wwwroot\app\customers\service.js" />
     <Content Include="wwwroot\app\customers\view.html">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

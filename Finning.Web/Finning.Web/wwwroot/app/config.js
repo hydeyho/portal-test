@@ -20,7 +20,15 @@
             name: 'customers',
             url: '/customers',
             templateUrl: '/app/customers/view.html',
-            controller: 'customersController as customerCtrl'
+            controller: 'customersController as customerCtrl',
+            resolve: {
+                'customers': [
+                    'customersService', function (customersService) {
+                        return customersService.query().$promise;
+                    }
+                ]
+            
+            }
         }
 
         $stateProvider.state(home);
