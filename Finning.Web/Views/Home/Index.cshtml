@@ -1,0 +1,411 @@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html ng-app="app" ng-strict-di>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <base href="/">
+    <link rel="stylesheet" type="text/css" href="~/app/customers/IndexStyleSheet.css"> <!--unsure on the directory-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+</head>
+<body style="background-color:  #ededed ">
+    <ui-view></ui-view>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-resource.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.js"></script>
+    <script src="~/app/app.js"></script>
+    <script src="~/app/config.js"></script>
+    <script src="~/app/customers/service.js"></script>
+    <script src="~/app/machines/service.js"></script>
+    <script src="~/app/home/controller.js"></script>
+    <script src="~/app/customers/controller.js"></script>
+    <script src="~/app/customers/details/controller.js"></script>
+    <script src="~/app/machines/controller.js"></script>
+    <script src="~/app/machines/details/controller.js"></script>
+
+    <!--*For styling the site, I struggled with positioning my navbar and footer as the angular was still at the top of the page and I know from working with Angular previously
+        that it will automatically remain at the top. For this reason I have included a basic mockup of how it should be styled (pdf called finningUI found within zip), however 
+        I have included my code within the portal to show you my code.
+        * I have incorporated the Angular links (ui-sref=...) to show I am able to incorporate my Boostrap navbar with angular; also maintaining the SPA
+        * Felt for this specific portal it would be efficient to include a search bar where users can filter to searching for customer or machine, while
+        advance searching including key words
+        *links in footer are not interactive except the left div 'Finning.com'
+        *Struggled adding my css file because I couldn't find the correct directory, therefore I included my css file inside my html file. However in future and normally, I will always seperate
+        my files.-->
+    <nav class="myNavBar navbar-default" style="background-color: #d3d3d3; font: 20px arial, sans-serif;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="Index.cshtml">Finning</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="http://localhost:65292">Home</a></li>
+                    <li><a ui-sref="customers">View Customers</a></li> <!--links using angular-->
+                    <li><a ui-sref="machines">View Machines</a></li> <!--links using angular-->
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav> <!--navBar-->
+
+    <div class="container" id="container_search">
+    <!--If a database was included in this example, I would use C# system.string class to search the contents of a string. Then once the data was put
+        inside the string, I would use StringComparison parameter to specify what would be compared. 
+        *In terms of filtering, I have written the pseudo code in Java if statement. As I'm not familiar, this is the way I would do it:
+        
+            if(user selects option value 0) {
+                search customer table in database
+            } else {
+                search machine table in database
+            }
+       -->
+        <div class="row">
+            <!--Again, right now the user cannot attempt to navigate to a machine/ customer that doesn't exist because the MachinesData and CustomerData 
+                or C# lists, however, my approach would be to add error handling in any searches the user can make. Here is my solution in javascript,
+                handling errors if the user tries to search for a machine/ customer that does not exist:
+                
+                    <script>
+                         try {
+ 	                        if (user navigates to a machine && it doesn't exist) throw "machine";
+ 	                        if (user navigates to a customer && it doesn't exist) throw "customer";
+                         } catch (err) {
+ 	                        message.innerHTML = "I'm sorry the " + err + " does not exist.";
+                         }
+                    </script>
+
+                My attempt creating a solution in C# in pseudo code:
+
+                using system;
+                namespace ErrorHandling {
+                    try {
+ 	                        if (user navigates to a machine && it doesn't exist); 
+ 	                        if (user navigates to a customer && it doesn't exist);
+                         } catch (NonExistentException e) {
+ 	                        Console.WriteLine("Exception caught: {0}", e);
+                         }
+                }
+                -->
+            <div class="col-md-12">
+                <h3>Search<br><br /></h3>
+                <div class="input-group" id="searchBar">
+                    <input type="text" class="form-control" placeholder="Search for customer or machine" />
+                    <div class="input-group-btn">
+                        <div class="btn-group" role="group">
+                            <div class="dropdown dropdown-lg">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label for="filter">Filter by</label>
+                                            <select class="form-control">
+                                                <option value="0" selected>Customer</option>
+                                                <option value="1">Machine</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contain">Contains the words</label>
+                                            <input class="form-control" type="text" />
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                    </form>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!--search box-->
+
+    <footer>
+        <div class="footer" id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                        <h3> Finning </h3>
+                        <ul>
+                            <li> <a href="http://www.finning.com/en_GB/technology.html"> Finning technology </a> </li>
+                            <li> <a href="http://www.finning.com/en_GB/services.html"> Finning services </a> </li>
+                            <li> <a href="http://www.finning.com/en_GB/products.html"> Finning products </a> </li>
+                            <li> <a href="http://www.finning.com/en_GB.html"> finning.com </a> </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                        <h3> Customers </h3>
+                        <ul>
+                            <li> <a href="#"> Customer </a> </li>
+                            <li> <a href="#"> Customer </a> </li>
+                            <li> <a href="#"> Customer </a> </li>
+                            <li> <a href="#"> Customer </a> </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                        <h3> Machines </h3>
+                        <ul>
+                            <li> <a href="#"> Machine </a> </li>
+                            <li> <a href="#"> Machine </a> </li>
+                            <li> <a href="#"> Machine </a> </li>
+                            <li> <a href="#"> Machine </a> </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12 ">
+                        <h3> Sign up</h3>
+                        <ul>
+                            <li>
+                                <div class="input-append newsletter-box text-center">
+                                    <input type="text" class="full text-center" placeholder="Email Address" id="emailAd">
+                                    <button class="btn  bg-gray" type="button"> Submit <i class="fa fa-long-arrow-right"> </i> </button>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="social">
+                            <li> <a href="https://www.facebook.com/"> <i class=" fa fa-facebook">   </i> </a> </li>
+                            <li> <a href="https://twitter.com/login"> <i class="fa fa-twitter">   </i> </a> </li>
+                            <li> <a href="https://www.google.co.uk"> <i class="fa fa-google-plus">   </i> </a> </li>
+                            <li> <a href="https://www.pinterest.co.uk/login/"> <i class="fa fa-pinterest">   </i> </a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="pull-left"> &copy; Portal test 2017. All rights reserved. </p>
+            </div>
+        </div>
+    </footer> <!--footer-->
+
+    
+
+    <style>
+    /*styling for footer*/
+        .full {
+            width: 100%;
+        }
+
+        .gap {
+            height: 30px;
+            width: 100%;
+            clear: both;
+            display: block;
+        }
+
+        .footer {
+            background: #EDEFF1;
+            height: auto;
+            padding-bottom: 30px;
+            position: relative;
+            width: 100%;
+            border-bottom: 1px solid #CCCCCC;
+            border-top: 1px solid #DDDDDD;
+        }
+
+            .footer p {
+                margin: 0;
+            }
+
+            .footer img {
+                max-width: 100%;
+            }
+
+            .footer h3 {
+                border-bottom: 1px solid #BAC1C8;
+                color: #54697E;
+                font-size: 18px;
+                font-weight: 600;
+                line-height: 27px;
+                padding: 40px 0 10px;
+                text-transform: uppercase;
+            }
+
+            .footer ul {
+                font-size: 13px;
+                list-style-type: none;
+                margin-left: 0;
+                padding-left: 0;
+                margin-top: 15px;
+                color: #7F8C8D;
+            }
+
+                .footer ul li a {
+                    padding: 0 0 5px 0;
+                    display: block;
+                }
+
+            .footer a {
+                color: #78828D;
+            }
+
+        .supportLi h4 {
+            font-size: 20px;
+            font-weight: lighter;
+            line-height: normal;
+            margin-bottom: 0 !important;
+            padding-bottom: 0;
+        }
+
+        .newsletter-box input#appendedInputButton {
+            background: #FFFFFF;
+            display: inline-block;
+            float: left;
+            height: 30px;
+            clear: both;
+            width: 100%;
+        }
+
+        .newsletter-box .btn {
+            border: medium none;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            
+            border-radius: 3px 3px 3px;
+            display: inline-block;
+            height: 40px;
+            padding: 0;
+            width: 100%;
+            color: #fff;
+        }
+
+        .newsletter-box {
+            overflow: hidden;
+        }
+
+        .bg-gray {
+            background-image: -moz-linear-gradient(center bottom, #BBBBBB 0%, #F0F0F0 100%);
+            box-shadow: 0 1px 0 #B4B3B3;
+        }
+
+        .social li {
+            background: none repeat scroll 0 0 #B5B5B5;
+            border: 2px solid #B5B5B5;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -o-border-radius: 50%;
+            -ms-border-radius: 50%;
+            border-radius: 50%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            margin: 0 8px 0 0;
+            padding: 0;
+            text-align: center;
+            width: 36px;
+            transition: all 0.5s ease 0s;
+            -moz-transition: all 0.5s ease 0s;
+            -webkit-transition: all 0.5s ease 0s;
+            -ms-transition: all 0.5s ease 0s;
+            -o-transition: all 0.5s ease 0s;
+        }
+
+            .social li:hover {
+                transform: scale(1.15) rotate(360deg);
+                -webkit-transform: scale(1.1) rotate(360deg);
+                -moz-transform: scale(1.1) rotate(360deg);
+                -ms-transform: scale(1.1) rotate(360deg);
+                -o-transform: scale(1.1) rotate(360deg);
+            }
+
+            .social li a {
+                color: #EDEFF1;
+            }
+
+            .social li:hover {
+                border: 2px solid #2c3e50;
+                background: #2c3e50;
+            }
+
+            .social li a i {
+                font-size: 16px;
+                margin: 0 0 0 5px;
+                color: #EDEFF1 !important;
+            }
+
+        .footer-bottom {
+            background: #E3E3E3;
+            border-top: 1px solid #DDDDDD;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+            .footer-bottom p.pull-left {
+                padding-top: 6px;
+            }
+
+            /*styling for search bar*/
+        #container_search {
+            border: 1px solid black;
+            background-color: #EDEFF1;
+            padding-top: 50px;
+            padding-right: 30px;
+            padding-bottom: 50px;
+            padding-left: 80px;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+            body {
+    padding-top: 50px;
+}
+.dropdown.dropdown-lg .dropdown-menu {
+    margin-top: -1px;
+    padding: 6px 20px;
+}
+.input-group-btn .btn-group {
+    display: flex !important;
+}
+.btn-group .btn {
+    border-radius: 0;
+    margin-left: -1px;
+}
+.btn-group .btn:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.btn-group .form-horizontal .btn[type="submit"] {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+.form-group .form-control:last-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+    #adv-search {
+        width: 500px;
+        margin: 0 auto;
+    }
+    .dropdown.dropdown-lg {
+        position: static !important;
+    }
+    .dropdown.dropdown-lg .dropdown-menu {
+        min-width: 500px;
+    }
+}
+      
+        </style>
+</body>
+</html>

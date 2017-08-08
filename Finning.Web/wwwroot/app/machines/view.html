@@ -1,0 +1,18 @@
+﻿<h1>Machines</h1>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Description</th>
+        <th>Serial Number</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="machine in $ctrl.machines track by machine.serialNumber">
+        <td>{{machine.description}}</td>
+        <td>{{machine.serialNumber}}</td>
+        <td><a ui-sref="machines.details({serialNumber: machine.serialNumber})">View Details</a></td>
+    </tr>
+    </tbody>
+</table>
+<ui-view></ui-view>
